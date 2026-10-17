@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hakim-pipecat"
+version = "0.1.0"
+description = "Hakim speech-to-text and text-to-speech services for Pipecat"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+authors = [{ name = "Hakim AI" }]
+keywords = ["pipecat", "speech-to-text", "text-to-speech", "stt", "tts", "hakim", "voice-ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+]
+
+# requirements.txt, plus loguru, which both modules import for logging but
+# which was only arriving transitively through pipecat-ai. python-dotenv is
+# used by the examples rather than the package, so it sits in an extra.
+dependencies = [
+    "pipecat-ai>=0.0.105",
+    "websockets>=12.0",
+    "loguru>=0.7.0",
+]
+
+[project.optional-dependencies]
+examples = ["python-dotenv>=1.0"]
+
+[project.urls]
+Homepage = "https://github.com/tryHakimAI/hakim-pipecat"
+Documentation = "https://tryhakim.ai/docs"
+Issues = "https://github.com/tryHakimAI/hakim-pipecat/issues"
+
+[tool.setuptools.packages.find]
+include = ["hakim_pipecat*"]

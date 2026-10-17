@@ -28,7 +28,16 @@ from websockets.asyncio.client import connect as websocket_connect
 from websockets.protocol import State
 
 from pipecat.frames.frames import ErrorFrame, Frame, StartFrame, TTSAudioRawFrame, TTSStoppedFrame
-from pipecat.services.settings import NOT_GIVEN, TTSSettings, _NotGiven, is_given
+from pipecat.services.settings import TTSSettings
+
+# NOT_GIVEN, the sentinel type and is_given moved to pipecat.utils.types in
+# pipecat 1.8, where the type also lost its underscore. Importing them from
+# pipecat.services.settings raises ImportError on 1.8 and later.
+try:
+    from pipecat.utils.types import NOT_GIVEN, is_given
+    from pipecat.utils.types import NotGiven as _NotGiven
+except ImportError:  # pipecat < 1.8
+    from pipecat.services.settings import NOT_GIVEN, _NotGiven, is_given
 from pipecat.services.tts_service import InterruptibleTTSService
 from pipecat.utils.tracing.service_decorators import traced_tts
 

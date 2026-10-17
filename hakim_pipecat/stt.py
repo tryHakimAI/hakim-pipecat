@@ -42,7 +42,16 @@ from pipecat.frames.frames import (
     VADUserStoppedSpeakingFrame,
 )
 from pipecat.processors.frame_processor import FrameDirection
-from pipecat.services.settings import NOT_GIVEN, STTSettings, _NotGiven, is_given
+from pipecat.services.settings import STTSettings
+
+# NOT_GIVEN, the sentinel type and is_given moved to pipecat.utils.types in
+# pipecat 1.8, where the type also lost its underscore. Importing them from
+# pipecat.services.settings raises ImportError on 1.8 and later.
+try:
+    from pipecat.utils.types import NOT_GIVEN, is_given
+    from pipecat.utils.types import NotGiven as _NotGiven
+except ImportError:  # pipecat < 1.8
+    from pipecat.services.settings import NOT_GIVEN, _NotGiven, is_given
 from pipecat.services.stt_service import WebsocketSTTService
 from pipecat.transcriptions.language import Language
 from pipecat.utils.time import time_now_iso8601
